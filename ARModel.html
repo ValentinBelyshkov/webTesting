@@ -22,5 +22,26 @@
         <a-gltf-model rotation="0 0 0 " position="0.15 -3.15 0" scale="2.5 2.5 2.5" src="#avatarModel" animation-mixer="clip:LironShuba; loop:true; timeScale: 1; crossFadeDuration: 1">
       </a-entity>
     </a-scene>
+	      
+	   <script>
+		   var el = document.querySelector('#avatarModel')
+
+// wait until model is loaded
+el.addEventListener('avatarModel', function(event){
+  
+  el.object3D.traverse(function(object3D){
+    var mat = object3D.material
+    if (mat) {
+      
+      // modify material here
+      mat.color.setRGB(1,0,1)
+      
+      // or replace it completely
+      //object3D.material = new THREE.MeshPhongMaterial()
+      
+    }
+  })
+})
+	  </<script>   
   </body>
 </html>
