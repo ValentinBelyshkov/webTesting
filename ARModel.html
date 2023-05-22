@@ -6,32 +6,24 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   </head>
   <body>
-    <!--<a-scene mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.1/examples/image-tracking/assets/card-example/card.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">-->
       <a-scene mindar-image="imageTargetSrc: https://urginsan.github.io/webTesting/ARModel.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
       <a-assets>
         <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.1/examples/image-tracking/assets/card-example/card.png" />
-        <!--<img id="card" src="https://urginsan.github.io/webTesting/marker.png" />-->
-        <!--<a-asset-item id="avatarModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.1/examples/image-tracking/assets/card-example/softmind/scene.gltf"></a-asset-item>-->
         <a-asset-item id="avatarModel" src="https://urginsan.github.io/webTesting/Shirt_Tshirt_GLB.glb"></a-asset-item>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
       <a-entity mindar-image-target="targetIndex: 0">
-        <!--<a-plane src="#card" position="0 0 0" height="0.552" width="1" rotation="0 0 0"></a-plane>-->
-        <!--<a-gltf-model rotation="0 0 0 " position="0 0 0.1" scale="0.005 0.005 0.005" src="#avatarModel" animation="property: position; to: 0 0.1 0.1; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate">-->
         <a-gltf-model rotation="0 0 0 " position="0 0 0.01" scale="0.4 0.4 0.4" src="#avatarModel" animation-mixer="clip:LironShuba; loop:true; timeScale: 1; crossFadeDuration: 1">
       </a-entity>
     </a-scene>
-       
-        <!--
+        
     <script>
-      document.getElementById("avatarModel").setAttribute("animation-mixer", "clip:LironShuba");
-      const timedelay = setTimeout(delayFunction, 2000);
-      
-      function delayFunction() {
-        document.getElementById("avatarModel").setAttribute("animation-mixer", "clip:LironShuba");
-      }
-  </script>
-        -->
+        video = document.createElement('video');
+        video.autoplay = true;
+        video.src = "textures/videos/Row1Col1.ogv";
+        var videoTexture = new THREE.Texture(video);
+        videoTexture.needsUpdate = true;
+    </script>
   </body>
 </html>
