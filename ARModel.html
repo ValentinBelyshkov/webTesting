@@ -30,7 +30,7 @@
 		  event.target.style.display="none";
 		  }
 
-		  AFRAME.registerComponent("anim1", {
+		  AFRAME.registerComponent("slideshow", {
         init: function () {
             // load the .pngs
             let loader = new THREE.TextureLoader();
@@ -42,7 +42,8 @@
                 }
                 this.pngArray.push(loader.load('https://urginsan.github.io/webTesting/sequence1/TextureAtlas_' + i + '.png')); // push TextureLoader loaded with img to array
             };
-
+            
+            this.el.addEventListener('loaded', e => {
             let mesh = this.el.getObject3D("mesh");
             this.material = mesh.material;
             var i = 0;
@@ -50,7 +51,8 @@
                 if (i >= this.pngArray.length) i = 0;
                 this.material.map = this.pngArray[i++];
                 this.material.needsUpdate = true;
-            }, 1000 / 25); // play at 25fps
+            }, 1000 / 25);
+            })// play at 25fps
         },
         remove: function () {
             clearInterval(this.id);
