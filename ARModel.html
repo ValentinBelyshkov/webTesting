@@ -12,8 +12,10 @@
       <a-assets>
         <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.1/examples/image-tracking/assets/card-example/card.png" />
 
-	<a-asset-item id="plane-obj" src="https://urginsan.github.io/webTesting/Shirt_Tshirt.obj"></a-asset-item>
-	      <video id="videoTex" webkit-playsinline playsinline autoplay loop="true" src="https://urginsan.github.io/webTesting/TextureAtlas.mp4"></video>
+	    <a-asset-item id="plane-obj" src="https://urginsan.github.io/webTesting/Shirt_Tshirt.obj"></a-asset-item>
+		  
+	    <video id="videoTex" loop="true" src="https://urginsan.github.io/webTesting/TextureAtlas.mp4" webkit-playsinline="true" autoplay="true" playsinline="true"></video>
+		  
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -24,7 +26,8 @@
       </a-entity>
     </a-scene>
   </body>
-	
+
+	<!-->
 	<script>
 	AFRAME.registerComponent('video-handler',{
   init: function(){
@@ -39,5 +42,5 @@
    });
   }
 });
-	</script>
+	</script>-->
 </html>
