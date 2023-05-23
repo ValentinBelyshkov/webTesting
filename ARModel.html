@@ -1,7 +1,6 @@
 <html>
   <head>
     <meta name="ARModel" content="width=device-width, initial-scale=1" />
-	  <!--<meta name="apple-mobile-web-app-capable" content="yes"/>-->
 	  
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script>
@@ -11,7 +10,7 @@
 	  <a-scene mindar-image="imageTargetSrc: https://urginsan.github.io/webTesting/ARModel.mind; uiError:no; uiLoading:no; uiScanning:no" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene" style="display: none" >
       
 	  <a-assets>
-		  <img id="my-texture" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.1/examples/image-tracking/assets/card-example/card.png">
+		  <img id="my-texture" src="https://urginsan.github.io/webTesting/marker.png">
         <!--<img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.1/examples/image-tracking/assets/card-example/card.png"/>-->
 	    <a-asset-item id="plane-obj" src="https://urginsan.github.io/webTesting/Shirt_Tshirt.obj"></a-asset-item>  
 	    <video id="videoTex" loop="true" autoplay playsinline src="https://urginsan.github.io/webTesting/TextureAtlas.mp4"></video>
