@@ -50,8 +50,25 @@
             };
             
             this.el.addEventListener('loaded', e => {
-            let mesh = this.el.getObject3D("mesh");
-            this.material = mesh.material;
+            //let mesh = this.el.getObject3D('mesh');
+            //this.material = mesh.material;
+
+            // assuming the 'model-loaded' event already fired
+    let mesh = this.el.getObject3D('mesh')
+    // assuming you want all nodes to have the same material        
+    var material = new THREE.MeshLambertMaterial({
+      color: this.data.color,
+    });
+        
+    mesh.traverse(function(node) {
+      // change only the mesh nodes
+      if(node.type != "Mesh") return;
+      // apply material and clean up
+      let tmp = node.material
+      node.material = material
+      tmp.dispose();
+    })
+
             var i = 0;
             this.id = setInterval(e => {
                 if (i >= this.pngArray.length) i = 0;
