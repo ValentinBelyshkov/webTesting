@@ -1,14 +1,14 @@
 <html>
   <head>
-    <!--<meta name="ARModel" content="width=device-width, initial-scale=1" />-->
-	  <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="ARModel" content="width=device-width, initial-scale=1" />
+	  <!--<meta name="apple-mobile-web-app-capable" content="yes"/>-->
 	  
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   </head>
   <body>
-      <a-scene mindar-image="imageTargetSrc: https://urginsan.github.io/webTesting/ARModel.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      <a-scene mindar-image="imageTargetSrc: https://urginsan.github.io/webTesting/ARModel.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene" style="display: none">
       <a-assets>
         <img id="card" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.1/examples/image-tracking/assets/card-example/card.png" />
 
@@ -28,27 +28,11 @@
 	  
 	  <script>
 		  function startPlaying(event) {
+		  document.getElementById("scene").style.display = "block";
 		  document.getElementById("videoTex").play();
 		  event.target.style.display="none";
 		  }
 	  </script>
-<input type="button" onclick="startPlaying(event)" style="width: 100px; height: 100px; position: fixed; top: 100px; left: 100px;"/>
+	<input type="button" onclick="startPlaying(event)" style="width: 100px; height: 100px; position: fixed; top: 100px; left: 100px;"/>
   </body>
-
-	<!-->
-	<script>
-	AFRAME.registerComponent('video-handler',{
-  init: function(){
-   let el = this.el;
-   let video = document.querySelector("#videoTex");
-   vid.pause();
-   el.addEventListener('mouseenter',function(){
-      video.play();
-   });
-   el.addEventListener('mouseleave',function(){
-
-   });
-  }
-});
-	</script>-->
 </html>
