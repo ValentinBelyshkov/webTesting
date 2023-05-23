@@ -5,6 +5,7 @@
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-material-collection/dist/aframe-material-collection.min.js"></script>
   </head>
   <body>
 	  <a-scene mindar-image="imageTargetSrc: https://urginsan.github.io/webTesting/ARModel.mind; uiError:no; uiLoading:no; uiScanning:no" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene" style="display: none" >
@@ -17,7 +18,7 @@
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
       <a-entity mindar-image-target="targetIndex: 0">
-	  <a-entity obj-model="obj: #plane-obj;" rotation="0 0 0 " position="0.075 -3.6 -0.3" scale="2.8 2.8 2.8" slideshow;></a-entity>
+	  <a-entity obj-model="obj: #plane-obj;" rotation="0 0 0 " position="0.075 -3.6 -0.3" scale="2.8 2.8 2.8" src="slideshow";></a-entity>
       <!--<a-box position="0 0 0" rotation="0 45 0" slideshow></a-box>-->
          <!--<a-video src="#videoTex" width="1.6" height="0.9" position="0 0 0"></a-video>-->
       </a-entity>
