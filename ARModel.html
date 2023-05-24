@@ -23,7 +23,7 @@
       <a-entity mindar-image-target="targetIndex: 0">
       <!--<a-entity position="0.075 -3.6 -0.3" gltf-model="#tree1"></a-entity>-->
       <!--<a-entity gltf-model="#model" rotation="0 0 0 " position="0.075 -3.6 -0.3" scale="2.8 2.8 2.8" slideshow>-->
-	  <a-entity obj-model="obj: #plane-obj;" rotation="0 0 0 " position="0.075 -3.6 -0.3" scale="2.8 2.8 2.8" src="https://urginsan.github.io/webTesting/sequence1/TextureAtlas_1.png";></a-entity>
+	  <a-entity obj-model="obj: #plane-obj;" rotation="0 0 0 " position="0.075 -3.6 -0.3" scale="2.8 2.8 2.8" lambert></a-entity>
        <!--<a-box position="0 0 0" rotation="0 45 0" slideshow></a-box>-->
          <!--<a-video src="#videoTex" width="1.6" height="0.9" position="0 0 0"></a-video>-->
       </a-entity>
@@ -69,6 +69,38 @@
             }
         }
     })
+
+
+    AFRAME.registerComponent('lambert', {
+      schema: {
+        color: {
+          default: '#0F0'
+        },
+      },
+      init: function() {},
+      update: function(oldData) {
+        let mesh = this.el.getObject3D('mesh')
+        if (!mesh) {
+          this.el.addEventListener('model-loaded', e => {
+            this.update.call(this, this.data)
+          })
+          return;
+        }
+        this.changeColor(mesh, this.data.color);
+      },
+      changeColor: function(mesh, color) {
+        var material = new THREE.MeshLambertMaterial({
+          color: color,
+        });
+        
+        mesh.traverse(function(node) {
+          if(node.type != "Mesh") return;
+          let tmp = node.material
+          node.material = material
+          tmp.dispose();
+        })
+      }
+    });
 	  </script>
 	  <!--<div style="display:flex; justify-content:center; align-items:center; height:100vh;">
 		  <button type="button" onclick="startPlaying(event)" style="width: 200px; height: 100px; font-size : 18px;" name="show_more">Начать</button>
