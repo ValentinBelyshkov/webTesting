@@ -10,7 +10,13 @@
 	  <a-scene mindar-image="imageTargetSrc: https://urginsan.github.io/webTesting/ARModel.mind; uiError:no; uiLoading:no; uiScanning:no" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false" id="scene" style="display: block"><!-- style="display: none" >-->
       
 	  <a-assets>
-	    <a-asset-item id="plane-obj" src="https://urginsan.github.io/webTesting/Shirt_Tshirt.obj"></a-asset-item>
+	    <a-asset-item 
+        id="plane-obj" 
+        src="https://urginsan.github.io/webTesting/Shirt_Tshirt.obj"
+        timeout="50000"
+        ></a-asset-item>
+
+
         <a-asset-item
           id="Tshirt"
           src="https://urginsan.github.io/webTesting/Shirt_Tshirt_GLB.glb"
