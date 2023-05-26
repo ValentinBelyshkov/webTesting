@@ -13,14 +13,11 @@
 	    <a-asset-item 
         id="plane-obj" 
         src="https://urginsan.github.io/webTesting/Shirt_Tshirt.obj"
-        timeout="150000"
         ></a-asset-item>
-
 
         <a-asset-item
           id="Tshirt"
           src="https://urginsan.github.io/webTesting/Shirt_Tshirt_GLB.glb"
-          timeout="150000"
         ></a-asset-item>
 
         <!--src="https://urginsan.github.io/webTesting/TextureAtlas.mp4"-->
@@ -31,7 +28,6 @@
         autoplay 
         playsinline 
         src="https://urginsan.github.io/webTesting/Big_Buck_Bunny_360_10s_1MB.mp4"
-        timeout="150000"
         ></video>
 		
       </a-assets>
@@ -48,7 +44,7 @@
       video-texture="video: #videoTex">
       </a-entity>
 	  <!--<a-entity obj-model="obj: #plane-obj;" rotation="0 0 0 " position="0.075 -3.6 -0.3" scale="2.8 2.8 2.8" slideshow></a-entity>-->
-      <!-- <a-box position="0 0 0" rotation="0 45 0" slideshow></a-box>-->
+      <a-box position="0 0 0" rotation="0 45 0" video-texture="video: #videoTex"></a-box>
          <!--<a-video src="#videoTex" width="1.6" height="0.9" position="0 0 0"></a-video>-->
       
     </a-scene>
