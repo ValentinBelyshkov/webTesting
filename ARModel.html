@@ -55,17 +55,21 @@
 	  <div style="display:flex; justify-content:center; align-items:center; height:100vh;">
 		  <button type="button" onclick="startPlaying(event)" style="width: 200px; height: 100px; font-size : 18px;" name="show_more">Начать</button>
 	  </div>
+
+      <script>
+      function startPlaying(event) {
+		  document.getElementById("scene").style.display = "block";
+		  document.getElementById("videoTex").play();
+		  event.target.style.display="none";
+		  }
+      </script>
       
 	 <script type="module" src="https://urginsan.github.io/webTesting/video-texture-components.js">
      import {videoTextureComponent, videoTextureCameraRollComponent} from 'https://urginsan.github.io/webTesting/video-texture-components.js'
 AFRAME.registerComponent('video-texture', videoTextureComponent)
 AFRAME.registerComponent('video-texture-camera-roll', videoTextureCameraRollComponent)
 
-		  function startPlaying(event) {
-		  document.getElementById("scene").style.display = "block";
-		  document.getElementById("videoTex").play();
-		  event.target.style.display="none";
-		  }
+		  
           /*
 		  AFRAME.registerComponent("slideshow", {
         init: function () {
