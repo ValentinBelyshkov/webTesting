@@ -41,32 +41,25 @@
       rotation="0 0 0 " 
       position="0.075 -3.6 -0.3" 
       scale="2.8 2.8 2.8" 
-      video-texture="video: #videoTex">
       </a-entity>
 	  <!--<a-entity obj-model="obj: #plane-obj;" rotation="0 0 0 " position="0.075 -3.6 -0.3" scale="2.8 2.8 2.8" slideshow></a-entity>-->
-      <a-box position="0 0 0" rotation="0 45 0" video-texture="video: #videoTex"></a-box>
+      <a-box position="0 0 0" rotation="0 45 0"
+      slideshow
+      ></a-box>
          <!--<a-video src="#videoTex" width="1.6" height="0.9" position="0 0 0"></a-video>-->
       
     </a-scene>
 	  <div style="display:flex; justify-content:center; align-items:center; height:100vh;">
 		  <button type="button" onclick="startPlaying(event)" style="width: 200px; height: 100px; font-size : 18px;" name="show_more">Начать</button>
 	  </div>
-
-      <script>
-      function startPlaying(event) {
+      
+	 <script>
+     function startPlaying(event) {
 		  document.getElementById("scene").style.display = "block";
 		  document.getElementById("videoTex").play();
 		  event.target.style.display="none";
 		  }
-      </script>
-      
-	 <script type="module" src="https://urginsan.github.io/webTesting/video-texture-components.js">
-     import {videoTextureComponent, videoTextureCameraRollComponent} from 'https://urginsan.github.io/webTesting/video-texture-components.js'
-AFRAME.registerComponent('video-texture', videoTextureComponent)
-AFRAME.registerComponent('video-texture-camera-roll', videoTextureCameraRollComponent)
 
-		  
-          /*
 		  AFRAME.registerComponent("slideshow", {
         init: function () {
             // load the .pngs
@@ -100,7 +93,6 @@ AFRAME.registerComponent('video-texture-camera-roll', videoTextureCameraRollComp
             }
         }
     })
-    */
     /*
     AFRAME.registerComponent('lambert', {
       schema: {
@@ -132,35 +124,6 @@ AFRAME.registerComponent('video-texture-camera-roll', videoTextureCameraRollComp
         })
       }
     });*/
-
-
-    const videoTextureComponent = {
-  schema: {
-    'video': {type: 'string'},
-  },
-  init() {
-    const video = document.querySelector(this.data.video)
-    const texture = new THREE.VideoTexture(video)
-    video.play()
-    const applyVideoMaterial = (mesh) => {
-      if (!mesh) {
-        return
-      }
-      if (mesh.material) {
-        // replaces every material that can take a diffuse map with video texture
-        mesh.material.map = texture
-      }
-      mesh.traverse((node) => {
-        if (node.isMesh) {
-          node.material.map = texture
-        }
-      })
-    }
-    this.el.addEventListener(
-      'model-loaded', () => applyVideoMaterial(this.el.getObject3D('mesh'))
-    )
-  },
-}
 	  </script>
 	  
   </body>
