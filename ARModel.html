@@ -30,9 +30,7 @@
     </a-scene>
 	  
 	 <script>
-     import {videoTextureComponent, videoTextureCameraRollComponent} from './js/video-texture-components'
-AFRAME.registerComponent('video-texture', videoTextureComponent)
-AFRAME.registerComponent('video-texture-camera-roll', videoTextureCameraRollComponent)
+
 
 		  function startPlaying(event) {
 		  //document.getElementById("scene").style.display = "block";
@@ -134,6 +132,10 @@ AFRAME.registerComponent('video-texture-camera-roll', videoTextureCameraRollComp
     )
   },
 }
+
+     //import {videoTextureComponent, videoTextureCameraRollComponent} from './js/video-texture-components'
+AFRAME.registerComponent('video-texture', videoTextureComponent)
+AFRAME.registerComponent('video-texture-camera-roll', videoTextureCameraRollComponent)
 const videoTextureCameraRollComponent = {
   schema: {
     'video': {type: 'string'},
