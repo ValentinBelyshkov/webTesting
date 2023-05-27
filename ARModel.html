@@ -24,10 +24,10 @@
       const material = new THREE.MeshBasicMaterial( {color: 0x00ffff, transparent: true, opacity: 0.5} );
       const plane = new THREE.Mesh( geometry, material );
       anchor.group.add(plane);
-      
+          
       // Load video and apply it as a texture
-      const videoElement = document.querySelector("#videoElement");
-      videoElement.src = "https://cdn.glitch.me/a4529633-cd34-457f-bfaa-7e1f25d4da7a/123.mp4";
+       const videoElement = document.createElement("video");
+      videoElement.src = "/123.mp4";
       videoElement.load();
       const videoTexture = new THREE.VideoTexture(videoElement);
       videoTexture.minFilter = THREE.LinearFilter;
@@ -61,6 +61,7 @@
 	height: 100vh;
 	position: relative;
 	overflow: hidden;
+        z-index: 1 ;
       }
       #control {
 	position: fixed;
@@ -76,7 +77,6 @@
       <button id="stopButton">Stop</button>
     </div>
     <div id="container">
-      <video id="videoElement" autoplay loop muted></video>
     </div>
   </body>
 </html>
