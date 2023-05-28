@@ -24,22 +24,38 @@
       const anchor = mindarThree.addAnchor(0);
         // Load video and apply it as a texture
        const videoElement = document.createElement("video");
-      videoElement.src = "/webTesting/12.mp4";
+      videoElement.src = "/12.mp4";
       videoElement.loop = true;
       videoElement.load();
       const videoTexture = new THREE.VideoTexture(videoElement);
-      videoTexture.minFilter = THREE.LinearFilter;
-      videoTexture.magFilter = THREE.LinearFilter;
-      videoTexture.format = THREE.RGBAFormat;
+      // Set the wrapping modes for the texture
+     videoTexture.wrapS = THREE.ClampToEdgeWrapping; // Horizontal wrapping
+     videoTexture.wrapT = THREE.ClampToEdgeWrapping; // Vertical wrapping
+     videoTexture.minFilter = THREE.LinearFilter;
+     videoTexture.magFilter = THREE.LinearFilter;
+     videoTexture.format = THREE.RGBAFormat;
 
       // Create a function to load and replace the GLB model
       const loadModel = (modelPath, new_material) => {
         const loader = new GLTFLoader();
         loader.load(modelPath, (gltf) => {
           const model = gltf.scene;
+           // Set rotation angles for the model
+    //model.rotation.x = Math.PI / 2;  // Rotate 90 degrees around the X-axis
+   // model.rotation.y = Math.PI;      // Rotate 180 degrees around the Y-axis
+   // model.rotation.z = Math.PI;  // Rotate 45 degrees around the Z-axis
+        model.scale.set(1.5, 1.5, 1.5);
           model.traverse((child) => {
       if (child.isMesh) {
+      const geometry = child.geometry;
+       const uv = geometry.getAttribute('uv');
+        for (let i = 0; i < uv.count; i++) {
+          uv.setY(i, 1 - uv.getY(i));
+        }
+        uv.needsUpdate = true;
         child.material = new_material; // Assign the material to the mesh
+        child.material.map = videoTexture;
+        child.material.needsUpdate = true;
       }
     });
           anchor.group.remove(...anchor.group.children); // Remove existing models
@@ -63,9 +79,10 @@ function fragmentShader() {
         uniform float smoothness;
         varying vec2 vUv;
         uniform sampler2D map;
+        uniform vec2 center; // Add the center uniform
         void main() {
 
-            vec4 videoColor = texture2D(map, vUv);
+            vec4 videoColor = texture2D(map, vUv  - center);
 
             float Y1 = 0.299 * keyColor.r + 0.587 * keyColor.g + 0.114 * keyColor.b;
             float Cr1 = keyColor.r - Y1;
@@ -77,11 +94,11 @@ function fragmentShader() {
 
             float blend = smoothstep(similarity, similarity + smoothness, distance(vec2(Cr2, Cb2), vec2(Cr1, Cb1)));
             gl_FragColor = vec4(videoColor.rgb, videoColor.a * blend);
+            //gl_FragColor = vec4(videoColor);
         }
     `
 }
 
-      const geometry = new THREE.PlaneGeometry(1, 0.55);
      const material = new THREE.ShaderMaterial({
     transparent: true,
     uniforms: {
@@ -89,20 +106,19 @@ function fragmentShader() {
         keyColor: { value: [0.0,0.0, 1.0] },
         similarity: { value: 0.8 },
         smoothness: { value: 0.0 },
+        center: { value: new THREE.Vector2(0.0, 0.0) }
     },
     vertexShader: vertexShader(),
     fragmentShader: fragmentShader(),
 })
 
-      const plane = new THREE.Mesh( geometry, material );
-      anchor.group.add(plane);
 
       material.map = videoTexture;
       material.needsUpdate = true;
 
 
       // Load the initial model
-      loadModel("/webTesting/ar.glb", material);
+      loadModel("/ar.glb", material);
 
   const initializeVideo = () => {
   document.removeEventListener("click", initializeVideo);
