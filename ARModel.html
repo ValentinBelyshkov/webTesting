@@ -27,6 +27,8 @@
       videoElement.src = "/webTesting/12.mp4";
       videoElement.loop = true;
       videoElement.load();
+	videoElement.setAttribute("playsinline", ""); // Add playsinline attribute
+	videoElement.setAttribute("webkit-playsinline", ""); // Add webkit-playsinline attribute
       const videoTexture = new THREE.VideoTexture(videoElement);
       // Set the wrapping modes for the texture
      videoTexture.wrapS = THREE.ClampToEdgeWrapping; // Horizontal wrapping
