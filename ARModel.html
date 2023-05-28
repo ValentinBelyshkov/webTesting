@@ -24,7 +24,7 @@
       const anchor = mindarThree.addAnchor(0);
         // Load video and apply it as a texture
        const videoElement = document.createElement("video");
-      videoElement.src = "/12.mp4";
+      videoElement.src = "/webTesting/12.mp4";
       videoElement.loop = true;
       videoElement.load();
       const videoTexture = new THREE.VideoTexture(videoElement);
@@ -102,7 +102,7 @@ function fragmentShader() {
 
 
       // Load the initial model
-      loadModel("/ar.glb", material);
+      loadModel("/webTesting/ar.glb", material);
 
   const initializeVideo = () => {
   document.removeEventListener("click", initializeVideo);
