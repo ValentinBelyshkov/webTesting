@@ -23,6 +23,10 @@
 	      // Adjust tracking parameters
 	  maxTrackCount: 1, // Limit the number of simultaneously tracked targets
 	  maxTrackFailCount: 60, // Increase the maximum number of tracking failures before resetting
+	      filterMinCF: 1,
+      filterBeta: 10000,
+      missTolerance: 0,
+      warmupTolerance: 0,
 	});
       const {renderer, scene, camera} = mindarThree;
       const anchor = mindarThree.addAnchor(0);
