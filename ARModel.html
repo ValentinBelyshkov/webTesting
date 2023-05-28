@@ -6,6 +6,7 @@
     {
       "imports": {
 	"three": "https://unpkg.com/three@0.147.0/build/three.module.js",
+  "three/examples/jsm/loaders/GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.147.0/examples/jsm/loaders/GLTFLoader.js",
 	"three/addons/": "https://unpkg.com/three@0.147.0/examples/jsm/",
 	"mindar-image-three":"https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-three.prod.js"
       }
@@ -14,43 +15,111 @@
     <script type="module">
       import * as THREE from 'three';
       import { MindARThree } from 'mindar-image-three';
+      import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
       const mindarThree = new MindARThree({
 	container: document.querySelector("#container"),
 	imageTargetSrc: "https://cdn.glitch.global/a4529633-cd34-457f-bfaa-7e1f25d4da7a/ARModel.mind?v=1685196234082"
       });
       const {renderer, scene, camera} = mindarThree;
       const anchor = mindarThree.addAnchor(0);
-      const geometry = new THREE.PlaneGeometry(1, 0.55);
-      const material = new THREE.MeshBasicMaterial( {color: 0x00ffff, transparent: true, opacity: 0.5} );
-      const plane = new THREE.Mesh( geometry, material );
-      anchor.group.add(plane);
-          
-      // Load video and apply it as a texture
+        // Load video and apply it as a texture
        const videoElement = document.createElement("video");
-      videoElement.src = "/123.mp4";
+      videoElement.src = "/12.mp4";
+      videoElement.loop = true;
       videoElement.load();
       const videoTexture = new THREE.VideoTexture(videoElement);
       videoTexture.minFilter = THREE.LinearFilter;
       videoTexture.magFilter = THREE.LinearFilter;
       videoTexture.format = THREE.RGBAFormat;
+
+      // Create a function to load and replace the GLB model
+      const loadModel = (modelPath, new_material) => {
+        const loader = new GLTFLoader();
+        loader.load(modelPath, (gltf) => {
+          const model = gltf.scene;
+          model.traverse((child) => {
+      if (child.isMesh) {
+        child.material = new_material; // Assign the material to the mesh
+      }
+    });
+          anchor.group.remove(...anchor.group.children); // Remove existing models
+          anchor.group.add(model);
+        });
+      };
+
+  function vertexShader() {
+    return `
+        varying vec2 vUv;
+        void main( void ) {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+    `
+}
+function fragmentShader() {
+    return `
+        uniform vec3 keyColor;
+        uniform float similarity;
+        uniform float smoothness;
+        varying vec2 vUv;
+        uniform sampler2D map;
+        void main() {
+
+            vec4 videoColor = texture2D(map, vUv);
+
+            float Y1 = 0.299 * keyColor.r + 0.587 * keyColor.g + 0.114 * keyColor.b;
+            float Cr1 = keyColor.r - Y1;
+            float Cb1 = keyColor.b - Y1;
+
+            float Y2 = 0.299 * videoColor.r + 0.587 * videoColor.g + 0.114 * videoColor.b;
+            float Cr2 = videoColor.r - Y2;
+            float Cb2 = videoColor.b - Y2;
+
+            float blend = smoothstep(similarity, similarity + smoothness, distance(vec2(Cr2, Cb2), vec2(Cr1, Cb1)));
+            gl_FragColor = vec4(videoColor.rgb, videoColor.a * blend);
+        }
+    `
+}
+
+      const geometry = new THREE.PlaneGeometry(1, 0.55);
+     const material = new THREE.ShaderMaterial({
+    transparent: true,
+    uniforms: {
+        map: { value: videoTexture },
+        keyColor: { value: [0.0,0.0, 1.0] },
+        similarity: { value: 0.8 },
+        smoothness: { value: 0.0 },
+    },
+    vertexShader: vertexShader(),
+    fragmentShader: fragmentShader(),
+})
+
+      const plane = new THREE.Mesh( geometry, material );
+      anchor.group.add(plane);
+
       material.map = videoTexture;
       material.needsUpdate = true;
 
-      
+
+      // Load the initial model
+      loadModel("/ar.glb", material);
+
+  const initializeVideo = () => {
+  document.removeEventListener("click", initializeVideo);
+
+  videoElement.play(); // Play the video
+};
+
+document.addEventListener("click", initializeVideo);
+
       const start = async() => {
 	await mindarThree.start();
 	renderer.setAnimationLoop(() => {
 	  renderer.render(scene, camera);
 	});
       }
-      const startButton = document.querySelector("#startButton");
-      startButton.addEventListener("click", () => {
-	start();
-      });
-      stopButton.addEventListener("click", () => {
-	mindarThree.stop();
-	mindarThree.renderer.setAnimationLoop(null);
-      });
+      start();
+
     </script>
     <style>
       body {
@@ -72,10 +141,6 @@
     </style>
   </head>
   <body>
-    <div id="control">
-      <button id="startButton">Start</button>
-      <button id="stopButton">Stop</button>
-    </div>
     <div id="container">
     </div>
   </body>
