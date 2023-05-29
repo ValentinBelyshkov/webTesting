@@ -15,7 +15,10 @@
     </script>
     <script type="module">
     let init = document.querySelector('#init');
-        
+      
+    window.onload = () => {
+    document.querySelector('.loader').style.opacity = '0'
+  }
 
 
     import * as THREE from 'three';
@@ -132,22 +135,24 @@ function fragmentShader() {
       loadModel("/webTesting/ar.glb", material);
 
 const initializeVideo = () => {
-  document.removeEventListener("click", initializeVideo);
   init.style.opacity = '0'
+  document.querySelector('.loader').style.opacity = '1'
+  document.removeEventListener("click", initializeVideo);
 
   videoElement.play(); // Play the video
 };
 
-init.addEventListener("click", initializeVideo);
+document.addEventListener("click", initializeVideo);
 
-const start = async() => {
+      const start = async() => {
 	await mindarThree.start();
 	renderer.setAnimationLoop(() => {
 	  renderer.render(scene, camera);
 	});
       }
   start()
-      
+  
+  
 
     </script>
     <style>
@@ -161,6 +166,9 @@ const start = async() => {
 	position: relative;
 	overflow: hidden;
         z-index: 1 ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       #control {
 	position: fixed;
@@ -171,19 +179,20 @@ const start = async() => {
       #init{
         position: relative;
         transition: .3s;
-        height: 100vh;
-        width: 100vw;
-        background: no-repeat center url('/webTesting/Ground 16.png');
-        opacity: 0.33;
+        height: 33vh;
+        width: 80vw;
+        background: no-repeat center url('touch.png');
+        opacity: 1;
         z-index: 9999999999999;
-        background-color: #000;
       }
     </style>
   </head>
   <body>
-    <div id="init" class="img">
-    </div>
+    
     <div id="container">
+      <div id="init" class="img">
+      </div>
     </div>
+    
   </body>
 </html>
