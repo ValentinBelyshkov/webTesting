@@ -131,22 +131,22 @@ function fragmentShader() {
       // Load the initial model
       loadModel("/webTesting/ar.glb", material);
 
-  const initializeVideo = () => {
+const initializeVideo = () => {
   document.removeEventListener("click", initializeVideo);
   init.style.opacity = '0'
 
   videoElement.play(); // Play the video
-  start()
 };
 
 init.addEventListener("click", initializeVideo);
 
-      const start = async() => {
+const start = async() => {
 	await mindarThree.start();
 	renderer.setAnimationLoop(() => {
 	  renderer.render(scene, camera);
 	});
       }
+  start()
       
 
     </script>
@@ -169,18 +169,21 @@ init.addEventListener("click", initializeVideo);
 	z-index: 2;
       }
       #init{
+        position: relative;
         transition: .3s;
         height: 100vh;
         width: 100vw;
-        background: no-repeat center url('/webTesting/Group 16.png');
+        background: no-repeat center url('/webTesting/Ground 16.png');
+        opacity: 0.33;
+        z-index: 9999999999999;
         background-color: #000;
       }
     </style>
   </head>
   <body>
+    <div id="init" class="img">
+    </div>
     <div id="container">
-        <div id="init" class="img">
-        </div>
     </div>
   </body>
 </html>
