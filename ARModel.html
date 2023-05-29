@@ -14,7 +14,11 @@
     }
     </script>
     <script type="module">
-      import * as THREE from 'three';
+    let init = document.querySelector('#init');
+        
+
+
+    import * as THREE from 'three';
       import { MindARThree } from 'mindar-image-three';
       import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
       const mindarThree = new MindARThree({
@@ -92,17 +96,13 @@ function fragmentShader() {
         uniform sampler2D map;
         uniform vec2 center; // Add the center uniform
         void main() {
-
             vec4 videoColor = texture2D(map, vUv  - center);
-
             float Y1 = 0.299 * keyColor.r + 0.587 * keyColor.g + 0.114 * keyColor.b;
             float Cr1 = keyColor.r - Y1;
             float Cb1 = keyColor.b - Y1;
-
             float Y2 = 0.299 * videoColor.r + 0.587 * videoColor.g + 0.114 * videoColor.b;
             float Cr2 = videoColor.r - Y2;
             float Cb2 = videoColor.b - Y2;
-
             float blend = smoothstep(similarity, similarity + smoothness, distance(vec2(Cr2, Cb2), vec2(Cr1, Cb1)));
             gl_FragColor = vec4(videoColor.rgb, videoColor.a * blend);
             //gl_FragColor = vec4(videoColor);
@@ -133,11 +133,13 @@ function fragmentShader() {
 
   const initializeVideo = () => {
   document.removeEventListener("click", initializeVideo);
+  init.style.opacity = '0'
 
   videoElement.play(); // Play the video
+  start()
 };
 
-document.addEventListener("click", initializeVideo);
+init.addEventListener("click", initializeVideo);
 
       const start = async() => {
 	await mindarThree.start();
@@ -145,12 +147,13 @@ document.addEventListener("click", initializeVideo);
 	  renderer.render(scene, camera);
 	});
       }
-      start();
+      
 
     </script>
     <style>
       body {
 	margin: 0;
+
       }
       #container {
 	width: 100vw;
@@ -165,10 +168,19 @@ document.addEventListener("click", initializeVideo);
 	left: 0;
 	z-index: 2;
       }
+      #init{
+        transition: .3s;
+        height: 100vh;
+        width: 100vw;
+        background: no-repeat center url('/webTesting/Group 16.png');
+        background-color: #000;
+      }
     </style>
   </head>
   <body>
     <div id="container">
+        <div id="init" class="img">
+        </div>
     </div>
   </body>
 </html>
