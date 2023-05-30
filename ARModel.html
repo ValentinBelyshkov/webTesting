@@ -17,7 +17,7 @@
     let init = document.querySelector('#init');
       
     window.onload = () => {
-    document.querySelector('.loader').style.opacity = '0'
+    document.querySelector('.loader').style.display = 'none'
   }
 
 
@@ -26,7 +26,7 @@
       import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
       const mindarThree = new MindARThree({
 	container: document.querySelector("#container"),
-	imageTargetSrc: "/webTesting/M2.mind",
+	imageTargetSrc: "/webTesting/M3.mind",
 	      // Adjust tracking parameters
 	  maxTrackCount: 10, // Limit the number of simultaneously tracked targets
 	  maxTrackFailCount: 60, // Increase the maximum number of tracking failures before resetting
@@ -34,7 +34,6 @@
       filterBeta: 10000,
       missTolerance: 0,
       warmupTolerance: 0,
-	      rotation: false, // Disable rotation tracking
 	});
       const {renderer, scene, camera} = mindarThree;
       const anchor = mindarThree.addAnchor(0);
@@ -137,7 +136,7 @@ function fragmentShader() {
 
 const initializeVideo = () => {
   init.style.opacity = '0'
-  document.querySelector('.loader').style.opacity = '1'
+  document.querySelector('.loader').style.display = 'block'
   document.removeEventListener("click", initializeVideo);
 
   videoElement.play(); // Play the video
@@ -180,9 +179,9 @@ document.addEventListener("click", initializeVideo);
       #init{
         position: relative;
         transition: .3s;
-        height: 22vh;
-        width: 54vw;
-        background: no-repeat center url('/webTesting/Group 16.png');
+        height: 33vh;
+        width: 80vw;
+        background: no-repeat center url('/webTesting/touch.png');
         opacity: 1;
         z-index: 9999999999999;
       }
